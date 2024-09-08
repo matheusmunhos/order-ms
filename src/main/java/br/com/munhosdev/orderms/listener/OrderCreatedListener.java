@@ -1,5 +1,6 @@
 package br.com.munhosdev.orderms.listener;
 
+import br.com.munhosdev.orderms.domain.Teste;
 import br.com.munhosdev.orderms.listener.dto.OrderCreatedEvent;
 import br.com.munhosdev.orderms.service.OrderService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
+import static br.com.munhosdev.orderms.config.RabbitMQConfig.MUNHOSDEV_ORDER_TEST_QUEUE;
 import static br.com.munhosdev.orderms.config.RabbitMQConfig.ORDER_CREATED_QUEUE;
 
 @Component
@@ -25,7 +27,12 @@ public class OrderCreatedListener {
 
     @RabbitListener(queues = ORDER_CREATED_QUEUE)
     public void listen(Message<OrderCreatedEvent> message) {
-        logger.info("Message consumed: {}", message);
+        logger.info("Message consumed: {}", message.getPayload());
         orderService.save(message.getPayload());
+    }
+
+    @RabbitListener(queues = MUNHOSDEV_ORDER_TEST_QUEUE)
+    public void listenTeste(Message<Teste> message) {
+        logger.info("Message consumed: {}", message.getPayload());
     }
 }

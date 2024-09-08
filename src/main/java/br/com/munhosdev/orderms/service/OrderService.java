@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static javax.management.Query.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
@@ -32,7 +31,6 @@ public class OrderService {
         this.repository = repository;
         this.mongoTemplate = mongoTemplate;
     }
-
 
     public void save(OrderCreatedEvent event) {
 
